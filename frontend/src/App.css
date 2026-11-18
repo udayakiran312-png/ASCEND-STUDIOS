@@ -1,0 +1,245 @@
+
+#root {
+  min-height: 100vh;
+}
+
+/* ==========================================
+   ASCEND STUDIOS — HOMEPAGE HERO
+========================================== */
+
+.home-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #f1ede9;
+}
+
+.home-hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* EDITORIAL TAGLINE */
+
+.hero-tagline {
+  position: absolute;
+  top: 12%;
+  left: 7.5%;
+  color: #202020;
+  font-size: clamp(10px, 1.05vw, 16px);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  line-height: 1.65;
+}
+
+.hero-tagline-line,
+.hero-season-line {
+  display: block;
+  width: 46px;
+  height: 2px;
+  margin-top: 12px;
+  background: #202020;
+}
+
+/* HERO BUTTONS */
+
+.hero-actions {
+  position: absolute;
+  bottom: 12%;
+  left: 5.3%;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.hero-shop-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 32px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.hero-shop-button:hover {
+  background: #303030;
+}
+
+.hero-explore-link {
+  padding: 8px 0;
+  border-bottom: 1px solid #202020;
+  color: #202020;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hero-explore-link:hover {
+  opacity: 0.65;
+}
+
+/* COLLECTION LABEL */
+
+.hero-season {
+  position: absolute;
+  right: 8%;
+  bottom: 12%;
+  color: #202020;
+  font-size: clamp(10px, 0.95vw, 14px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  line-height: 1.6;
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+  .hero-tagline {
+    top: 9%;
+    left: 6%;
+    font-size: 10px;
+  }
+
+  .hero-actions {
+    bottom: 8%;
+    left: 5%;
+    gap: 16px;
+  }
+
+  .hero-shop-button {
+    min-height: 36px;
+    padding: 0 18px;
+    font-size: 10px;
+  }
+
+  .hero-explore-link {
+    font-size: 10px;
+  }
+
+  .hero-season {
+    right: 5%;
+    bottom: 8%;
+    font-size: 10px;
+  }
+}
+
+/* ==========================================
+   MOBILE — EDITORIAL REDESIGN
+========================================== */
+
+@media (max-width: 600px) {
+  .home-hero {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /*
+    Preserve the entire original campaign image.
+    No fixed height, no aggressive cropping.
+  */
+
+  .home-hero-image {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  /* Smaller tagline over the campaign image */
+
+  .hero-tagline {
+    top: 5%;
+    left: 5%;
+    font-size: clamp(7px, 2vw, 9px);
+    letter-spacing: 0.12em;
+    line-height: 1.55;
+  }
+
+  .hero-tagline-line {
+    width: 24px;
+    height: 1px;
+    margin-top: 6px;
+  }
+
+  /*
+    Move buttons beneath the image.
+    This prevents overlap with the model.
+  */
+
+  .hero-actions {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 17px 5%;
+    background: #f1ede9;
+  }
+
+  .hero-shop-button {
+    min-height: 38px;
+    padding: 0 19px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-explore-link {
+    padding: 8px 0;
+    font-size: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  /*
+    Hide the floating season label on mobile.
+    The campaign image already contains
+    the prominent ASCEND branding.
+  */
+
+  .hero-season {
+    display: none;
+  }
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 380px) {
+  .hero-actions {
+    gap: 12px;
+    padding: 14px 4%;
+  }
+
+  .hero-shop-button {
+    min-height: 36px;
+    padding: 0 13px;
+    font-size: 9px;
+  }
+
+  .hero-explore-link {
+    font-size: 9px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-shop-button {
+    transition: none;
+  }
+}

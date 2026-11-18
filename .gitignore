@@ -1,0 +1,31 @@
+.env
+.env.*
+!.env.example
+
+**/node_modules/
+**/dist/
+**/generated/prisma/
+
+**/*.db
+**/*.db-*
+**/*.sqlite
+**/*.sqlite3
+
+.vercel/
+
+# Local development tools
+**/.agents/
+**/.claude/
+**/.cursor/
+
+# Local backups
+**/*.backup.ts
+**/*.backup.js
+
+# TypeScript build cache
+**/*.tsbuildinfo
+
+# Development assistant folders
+**/.windsurf/
+**/.claude/
+**/.agents/

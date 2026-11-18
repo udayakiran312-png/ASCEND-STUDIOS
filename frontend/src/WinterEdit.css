@@ -1,0 +1,251 @@
+
+/* ASCEND STUDIOS — WINTER EDIT */
+
+.winter-edit {
+  position: relative;
+  width: 100%;
+  height: 490px;
+  overflow: hidden;
+  background: #f5f3ef;
+  isolation: isolate;
+}
+
+/* DESKTOP IMAGE */
+
+.winter-edit-visual {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.winter-edit-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* DESKTOP CONTENT */
+
+.winter-edit-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 45%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 45px 6%;
+  color: #101010;
+  background: transparent;
+}
+
+.winter-edit-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  margin-bottom: 22px;
+}
+
+.winter-edit-content h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(52px, 6vw, 94px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -3px;
+  margin: 0 0 25px;
+}
+
+.winter-edit-content p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 26px;
+}
+
+.winter-edit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 27px;
+  background: #101010;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.winter-edit-button:hover {
+  background: #303030;
+}
+
+/* TABLET */
+
+@media (min-width: 761px) and (max-width: 1024px) {
+  .winter-edit {
+    height: 430px;
+  }
+
+  .winter-edit-content {
+    width: 55%;
+    padding: 40px 5%;
+  }
+
+  .winter-edit-content h2 {
+    font-size: clamp(48px, 7vw, 76px);
+  }
+}
+
+/* MOBILE — SINGLE CONTINUOUS BANNER */
+
+@media (max-width: 760px) {
+  .winter-edit {
+    height: 480px;
+    background: #eee8e3;
+  }
+
+  .winter-edit-visual {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .winter-edit-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 75% center;
+  }
+
+  /* Subtle fade to protect text readability */
+  .winter-edit-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(245, 243, 239, 0.94) 0%,
+      rgba(245, 243, 239, 0.7) 38%,
+      rgba(245, 243, 239, 0) 75%
+    );
+    pointer-events: none;
+  }
+
+  .winter-edit-content {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 28px 5%;
+    justify-content: center;
+    align-items: flex-start;
+    background: transparent;
+  }
+
+  .winter-edit-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin: 0 0 14px;
+  }
+
+  .winter-edit-content h2 {
+    max-width: 55%;
+    font-size: clamp(34px, 9vw, 42px);
+    line-height: 0.95;
+    letter-spacing: -1.5px;
+    margin: 0 0 18px;
+  }
+
+  .winter-edit-content p {
+    max-width: 145px;
+    font-size: 10px;
+    line-height: 1.6;
+    margin: 0 0 20px;
+  }
+
+  .winter-edit-button {
+    padding: 13px 15px;
+    font-size: 9px;
+    white-space: nowrap;
+  }
+}
+/* COMPACT MOBILE WINTER EDIT */
+
+@media (max-width: 760px) {
+  .winter-edit {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    background: #f5f3ef;
+  }
+
+  .winter-edit-visual {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .winter-edit-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 43%;
+    content: url("/images/winter-edit-mobile.png");
+    filter: contrast(1.12) brightness(0.98);
+    opacity: 1;
+  }
+
+  .winter-edit-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    padding: 20px 5%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: transparent;
+  }
+
+  .winter-edit-label {
+    font-size: 8px;
+    letter-spacing: 2px;
+    margin: 0 0 10px;
+  }
+
+  .winter-edit-content h2 {
+    max-width: 160px;
+    font-size: 34px;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    margin: 0 0 13px;
+  }
+
+  .winter-edit-content p {
+    max-width: 145px;
+    font-size: 10px;
+    line-height: 1.5;
+    margin: 0 0 15px;
+  }
+
+  .winter-edit-button {
+    padding: 10px 12px;
+    font-size: 9px;
+    white-space: nowrap;
+  }
+}

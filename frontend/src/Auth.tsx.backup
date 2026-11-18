@@ -1,0 +1,1137 @@
+
+import { useEffect, useState, type FormEvent } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import {
+  ArrowRight,
+  LogOut,
+  UserRound,
+  Package,
+  MapPin,
+  Heart,
+  ShoppingBag,
+  Plus,
+  Trash2,
+} from "lucide-react";
+import "./Auth.css";
+
+const API_URL = "http://localhost:5000/api";
+
+const TOKEN_KEY = "ascend_token";
+const USER_KEY = "ascend_user";
+const ORDER_KEY = "ascend_orders";
+
+interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+}
+
+interface AuthResponse {
+  success: boolean;
+  message?: string;
+  token?: string;
+  user?: AuthUser;
+}
+
+interface OrderItem {
+  id: number;
+  name: string;
+  image: string;
+  size: string;
+  quantity: number;
+  price: number;
+}
+
+interface Order {
+  id: string;
+  date: string;
+  customer: {
+    name: string;
+    email: string;
+  };
+  items: OrderItem[];
+  total: number;
+  status: string;
+}
+
+interface SavedAddress {
+  id: string;
+  name: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
+
+function getStoredUser(): AuthUser | null {
+  try {
+    const token = localStorage.getItem(TOKEN_KEY);
+    const raw = localStorage.getItem(USER_KEY);
+
+    if (!token || !raw) return null;
+
+    const user: unknown = JSON.parse(raw);
+
+    if (
+      typeof user === "object" &&
+      user !== null &&
+      "id" in user &&
+      "name" in user &&
+      "email" in user &&
+      typeof user.id === "string" &&
+      typeof user.name === "string" &&
+      typeof user.email === "string"
+    ) {
+      return user as AuthUser;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function readOrders(email: string): Order[] {
+  try {
+    const saved: unknown = JSON.parse(
+      localStorage.getItem(ORDER_KEY) || "[]"
+    );
+
+    if (!Array.isArray(saved)) return [];
+
+    return saved.filter((order): order is Order => {
+      if (!order || typeof order !== "object") {
+        return false;
+      }
+
+      const candidate = order as Partial<Order>;
+
+      return (
+        typeof candidate.id === "string" &&
+        typeof candidate.date === "string" &&
+        typeof candidate.total === "number" &&
+        Array.isArray(candidate.items) &&
+        typeof candidate.customer?.email === "string" &&
+        candidate.customer.email.toLowerCase() ===
+          email.toLowerCase()
+      );
+    });
+  } catch {
+    return [];
+  }
+}
+
+function addressKey(userId: string) {
+  return `ascend_addresses_${userId}`;
+}
+
+function readAddresses(userId: string): SavedAddress[] {
+  try {
+    const saved: unknown = JSON.parse(
+      localStorage.getItem(addressKey(userId)) || "[]"
+    );
+
+    return Array.isArray(saved)
+      ? saved.filter(
+          (item): item is SavedAddress =>
+            item !== null &&
+            typeof item === "object" &&
+            typeof item.id === "string" &&
+            typeof item.address === "string" &&
+            typeof item.city === "string" &&
+            typeof item.state === "string" &&
+            typeof item.pincode === "string" &&
+            typeof item.name === "string" &&
+            typeof item.phone === "string"
+        )
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+const money = (price: number) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(price);
+
+const productLink = (id: number) =>
+  id >= 201
+    ? `/accessories/${id}`
+    : id >= 101
+      ? `/women/${id}`
+      : `/men/${id}`;
+
+export function Login() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  if (getStoredUser()) {
+    return <Navigate to="/account" replace />;
+  }
+
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault();
+    if (loading) return;
+
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        `${API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      const data: AuthResponse = await response.json();
+
+      if (!response.ok || !data.token || !data.user) {
+        throw new Error(
+          data.message || "Unable to sign in."
+        );
+      }
+
+      localStorage.setItem(TOKEN_KEY, data.token);
+      localStorage.setItem(
+        USER_KEY,
+        JSON.stringify(data.user)
+      );
+
+      navigate("/account", { replace: true });
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className="auth-page">
+      <div className="auth-container">
+        <div className="auth-heading">
+          <span className="auth-eyebrow">
+            ASCEND STUDIOS / ACCOUNT
+          </span>
+
+          <h1>WELCOME BACK.</h1>
+          <p>
+            Sign in to your ASCEND STUDIOS account.
+          </p>
+        </div>
+
+        <form
+          className="auth-form"
+          onSubmit={handleSubmit}
+        >
+          <label htmlFor="login-email">
+            EMAIL ADDRESS
+          </label>
+
+          <input
+            id="login-email"
+            type="email"
+            placeholder="Enter your email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(event) =>
+              setEmail(event.target.value)
+            }
+          />
+
+          <label htmlFor="login-password">
+            PASSWORD
+          </label>
+
+          <input
+            id="login-password"
+            type="password"
+            placeholder="Enter your password"
+            autoComplete="current-password"
+            required
+            value={password}
+            onChange={(event) =>
+              setPassword(event.target.value)
+            }
+          />
+
+          {error && (
+            <p className="auth-error" role="alert">
+              {error}
+            </p>
+          )}
+
+          <button
+            className="auth-submit"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "SIGNING IN..." : "SIGN IN"}
+            {!loading && <ArrowRight size={18} />}
+          </button>
+        </form>
+
+        <div className="auth-footer">
+          <span>NEW TO ASCEND STUDIOS?</span>
+          <Link to="/register">
+            CREATE AN ACCOUNT
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+export function Register() {
+  const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] =
+    useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  if (getStoredUser()) {
+    return <Navigate to="/account" replace />;
+  }
+
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault();
+    if (loading) return;
+
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError(
+        "Password must contain at least 8 characters."
+      );
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        `${API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+          }),
+        }
+      );
+
+      const data: AuthResponse = await response.json();
+
+      if (!response.ok || !data.token || !data.user) {
+        throw new Error(
+          data.message || "Unable to create account."
+        );
+      }
+
+      localStorage.setItem(TOKEN_KEY, data.token);
+      localStorage.setItem(
+        USER_KEY,
+        JSON.stringify(data.user)
+      );
+
+      navigate("/account", { replace: true });
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className="auth-page">
+      <div className="auth-container">
+        <div className="auth-heading">
+          <span className="auth-eyebrow">
+            ASCEND STUDIOS / MEMBERSHIP
+          </span>
+
+          <h1>JOIN ASCEND.</h1>
+          <p>
+            Create an account and become part of
+            ASCEND STUDIOS.
+          </p>
+        </div>
+
+        <form
+          className="auth-form"
+          onSubmit={handleSubmit}
+        >
+          <label htmlFor="register-name">
+            FULL NAME
+          </label>
+
+          <input
+            id="register-name"
+            type="text"
+            placeholder="Your full name"
+            autoComplete="name"
+            required
+            value={name}
+            onChange={(event) =>
+              setName(event.target.value)
+            }
+          />
+
+          <label htmlFor="register-email">
+            EMAIL ADDRESS
+          </label>
+
+          <input
+            id="register-email"
+            type="email"
+            placeholder="Your email address"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(event) =>
+              setEmail(event.target.value)
+            }
+          />
+
+          <label htmlFor="register-password">
+            PASSWORD
+          </label>
+
+          <input
+            id="register-password"
+            type="password"
+            placeholder="Minimum 8 characters"
+            autoComplete="new-password"
+            minLength={8}
+            required
+            value={password}
+            onChange={(event) =>
+              setPassword(event.target.value)
+            }
+          />
+
+          <label htmlFor="register-confirm">
+            CONFIRM PASSWORD
+          </label>
+
+          <input
+            id="register-confirm"
+            type="password"
+            placeholder="Confirm your password"
+            autoComplete="new-password"
+            required
+            value={confirmPassword}
+            onChange={(event) =>
+              setConfirmPassword(event.target.value)
+            }
+          />
+
+          {error && (
+            <p className="auth-error" role="alert">
+              {error}
+            </p>
+          )}
+
+          <button
+            className="auth-submit"
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "CREATING ACCOUNT..."
+              : "CREATE ACCOUNT"}
+
+            {!loading && <ArrowRight size={18} />}
+          </button>
+        </form>
+
+        <div className="auth-footer">
+          <span>ALREADY HAVE AN ACCOUNT?</span>
+          <Link to="/login">SIGN IN</Link>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+type AccountTab = "profile" | "orders" | "addresses";
+
+function AccountDashboard({
+  user,
+}: {
+  user: AuthUser;
+}) {
+  const navigate = useNavigate();
+
+  const [tab, setTab] =
+    useState<AccountTab>("profile");
+
+  const [orders, setOrders] = useState<Order[]>(
+    () => readOrders(user.email)
+  );
+
+  const [addresses, setAddresses] = useState<
+    SavedAddress[]
+  >(() => readAddresses(user.id));
+
+  const [showAddressForm, setShowAddressForm] =
+    useState(false);
+
+  const [addressError, setAddressError] =
+    useState("");
+
+  const [addressMessage, setAddressMessage] =
+    useState("");
+
+  const [addressForm, setAddressForm] = useState({
+    name: user.name,
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+  });
+
+  useEffect(() => {
+    const refresh = () => {
+      setOrders(readOrders(user.email));
+      setAddresses(readAddresses(user.id));
+    };
+
+    window.addEventListener("storage", refresh);
+    window.addEventListener("focus", refresh);
+
+    return () => {
+      window.removeEventListener("storage", refresh);
+      window.removeEventListener("focus", refresh);
+    };
+  }, [user.email, user.id]);
+
+  function handleLogout() {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+    navigate("/login", { replace: true });
+  }
+
+  function saveAddress(
+    event: FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault();
+    setAddressError("");
+    setAddressMessage("");
+
+    if (!/^[6-9]\d{9}$/.test(addressForm.phone.trim())) {
+      setAddressError(
+        "Enter a valid 10-digit Indian mobile number."
+      );
+      return;
+    }
+
+    if (!/^\d{6}$/.test(addressForm.pincode.trim())) {
+      setAddressError(
+        "Enter a valid 6-digit PIN code."
+      );
+      return;
+    }
+
+    const newAddress: SavedAddress = {
+      id: `address-${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2, 8)}`,
+      ...addressForm,
+    };
+
+    const updated = [...addresses, newAddress];
+
+    try {
+      localStorage.setItem(
+        addressKey(user.id),
+        JSON.stringify(updated)
+      );
+
+      setAddresses(updated);
+      setShowAddressForm(false);
+      setAddressMessage("Address saved successfully.");
+
+      setAddressForm({
+        name: user.name,
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        pincode: "",
+      });
+    } catch {
+      setAddressError(
+        "Unable to save address. Please try again."
+      );
+    }
+  }
+
+  function removeAddress(id: string) {
+    const updated = addresses.filter(
+      (address) => address.id !== id
+    );
+
+    try {
+      localStorage.setItem(
+        addressKey(user.id),
+        JSON.stringify(updated)
+      );
+      setAddresses(updated);
+      setAddressMessage("Address removed.");
+    } catch {
+      setAddressMessage(
+        "Unable to remove address."
+      );
+    }
+  }
+
+  return (
+    <main className="auth-page account-page">
+      <div className="account-container">
+        <div className="auth-heading">
+          <span className="auth-eyebrow">
+            ASCEND STUDIOS / MEMBERSHIP
+          </span>
+
+          <h1>MY ACCOUNT.</h1>
+          <p>
+            Your personal space at ASCEND STUDIOS.
+          </p>
+        </div>
+
+        <div className="account-card">
+          <div className="account-avatar">
+            <UserRound
+              size={28}
+              strokeWidth={1.3}
+            />
+          </div>
+
+          <div className="account-details">
+            <span className="account-label">
+              WELCOME BACK
+            </span>
+
+            <h2>{user.name}</h2>
+
+            <span className="account-label">
+              {user.email}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            className="account-signout-top"
+            onClick={handleLogout}
+          >
+            <LogOut size={15} />
+            SIGN OUT
+          </button>
+        </div>
+
+        <div className="account-dashboard">
+          <nav
+            className="account-tabs"
+            aria-label="Account sections"
+          >
+            <button
+              type="button"
+              className={
+                tab === "profile" ? "active" : ""
+              }
+              onClick={() => setTab("profile")}
+            >
+              <UserRound size={17} />
+              MY PROFILE
+            </button>
+
+            <button
+              type="button"
+              className={
+                tab === "orders" ? "active" : ""
+              }
+              onClick={() => {
+                setOrders(readOrders(user.email));
+                setTab("orders");
+              }}
+            >
+              <Package size={17} />
+              MY ORDERS
+            </button>
+
+            <button
+              type="button"
+              className={
+                tab === "addresses" ? "active" : ""
+              }
+              onClick={() => setTab("addresses")}
+            >
+              <MapPin size={17} />
+              SAVED ADDRESSES
+            </button>
+          </nav>
+
+          <div className="account-panel">
+            {tab === "profile" && (
+              <section>
+                <div className="account-panel-heading">
+                  <div>
+                    <span className="account-label">
+                      ACCOUNT / 01
+                    </span>
+                    <h2>PERSONAL DETAILS</h2>
+                  </div>
+                </div>
+
+                <div className="account-profile-fields">
+                  <div>
+                    <span>FULL NAME</span>
+                    <strong>{user.name}</strong>
+                  </div>
+
+                  <div>
+                    <span>EMAIL ADDRESS</span>
+                    <strong>{user.email}</strong>
+                  </div>
+                </div>
+
+                <p className="account-panel-note">
+                  These details are linked to your
+                  registered account.
+                </p>
+
+                <div className="account-quick-links">
+                  <Link to="/wishlist">
+                    <Heart size={17} />
+                    MY WISHLIST
+                    <ArrowRight size={16} />
+                  </Link>
+
+                  <Link to="/cart">
+                    <ShoppingBag size={17} />
+                    SHOPPING BAG
+                    <ArrowRight size={16} />
+                  </Link>
+
+                  <Link to="/men">
+                    CONTINUE SHOPPING
+                    <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </section>
+            )}
+
+            {tab === "orders" && (
+              <section>
+                <div className="account-panel-heading">
+                  <div>
+                    <span className="account-label">
+                      ACCOUNT / 02
+                    </span>
+                    <h2>ORDER HISTORY</h2>
+                  </div>
+
+                  <span className="account-count">
+                    {orders.length} ORDERS
+                  </span>
+                </div>
+
+                {orders.length === 0 ? (
+                  <div className="account-empty-state">
+                    <Package
+                      size={32}
+                      strokeWidth={1.2}
+                    />
+
+                    <h3>NO ORDERS YET.</h3>
+
+                    <p>
+                      Your demo orders will appear
+                      here after checkout.
+                    </p>
+
+                    <Link to="/men">
+                      EXPLORE COLLECTION
+                      <ArrowRight size={15} />
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="account-orders">
+                    {orders.map((order) => (
+                      <article
+                        className="account-order"
+                        key={order.id}
+                      >
+                        <div className="account-order-header">
+                          <div>
+                            <span className="account-label">
+                              ORDER REFERENCE
+                            </span>
+
+                            <h3>{order.id}</h3>
+
+                            <p>
+                              {new Date(
+                                order.date
+                              ).toLocaleDateString(
+                                "en-IN",
+                                {
+                                  day: "2-digit",
+                                  month: "long",
+                                  year: "numeric",
+                                }
+                              )}
+                            </p>
+                          </div>
+
+                          <div className="account-order-total">
+                            <strong>
+                              {money(order.total)}
+                            </strong>
+
+                            <span>DEMO ORDER</span>
+                          </div>
+                        </div>
+
+                        <div className="account-order-items">
+                          {order.items.map(
+                            (item, index) => (
+                              <div
+                                className="account-order-item"
+                                key={`${item.id}-${item.size}-${index}`}
+                              >
+                                <Link
+                                  to={productLink(
+                                    item.id
+                                  )}
+                                >
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                  />
+                                </Link>
+
+                                <div>
+                                  <Link
+                                    to={productLink(
+                                      item.id
+                                    )}
+                                  >
+                                    {item.name}
+                                  </Link>
+
+                                  <p>
+                                    SIZE {item.size} /
+                                    QTY {item.quantity}
+                                  </p>
+                                </div>
+
+                                <strong>
+                                  {money(
+                                    item.price *
+                                      item.quantity
+                                  )}
+                                </strong>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
+
+                <p className="account-panel-note">
+                  Order history shown here contains
+                  browser-saved demo orders only.
+                  No real purchases were processed.
+                </p>
+              </section>
+            )}
+
+            {tab === "addresses" && (
+              <section>
+                <div className="account-panel-heading">
+                  <div>
+                    <span className="account-label">
+                      ACCOUNT / 03
+                    </span>
+                    <h2>SAVED ADDRESSES</h2>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="account-add-address"
+                    onClick={() => {
+                      setShowAddressForm(
+                        !showAddressForm
+                      );
+                      setAddressError("");
+                      setAddressMessage("");
+                    }}
+                  >
+                    <Plus size={16} />
+                    {showAddressForm
+                      ? "CANCEL"
+                      : "ADD ADDRESS"}
+                  </button>
+                </div>
+
+                {addressMessage && (
+                  <p
+                    className="account-address-message"
+                    role="status"
+                  >
+                    {addressMessage}
+                  </p>
+                )}
+
+                {showAddressForm && (
+                  <form
+                    className="account-address-form"
+                    onSubmit={saveAddress}
+                  >
+                    <label>
+                      FULL NAME
+                      <input
+                        required
+                        value={addressForm.name}
+                        onChange={(e) =>
+                          setAddressForm({
+                            ...addressForm,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      PHONE NUMBER
+                      <input
+                        required
+                        type="tel"
+                        inputMode="numeric"
+                        maxLength={10}
+                        value={addressForm.phone}
+                        onChange={(e) =>
+                          setAddressForm({
+                            ...addressForm,
+                            phone: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="account-field-full">
+                      STREET ADDRESS
+                      <input
+                        required
+                        value={addressForm.address}
+                        onChange={(e) =>
+                          setAddressForm({
+                            ...addressForm,
+                            address: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      CITY
+                      <input
+                        required
+                        value={addressForm.city}
+                        onChange={(e) =>
+                          setAddressForm({
+                            ...addressForm,
+                            city: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      STATE
+                      <input
+                        required
+                        value={addressForm.state}
+                        onChange={(e) =>
+                          setAddressForm({
+                            ...addressForm,
+                            state: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      PIN CODE
+                      <input
+                        required
+                        inputMode="numeric"
+                        maxLength={6}
+                        value={addressForm.pincode}
+                        onChange={(e) =>
+                          setAddressForm({
+                            ...addressForm,
+                            pincode: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+
+                    {addressError && (
+                      <p
+                        className="auth-error account-field-full"
+                        role="alert"
+                      >
+                        {addressError}
+                      </p>
+                    )}
+
+                    <button
+                      type="submit"
+                      className="account-save-address account-field-full"
+                    >
+                      SAVE ADDRESS
+                      <ArrowRight size={16} />
+                    </button>
+                  </form>
+                )}
+
+                {addresses.length === 0 ? (
+                  <div className="account-empty-state">
+                    <MapPin
+                      size={32}
+                      strokeWidth={1.2}
+                    />
+
+                    <h3>NO SAVED ADDRESSES.</h3>
+
+                    <p>
+                      Add an address for future
+                      reference.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="account-address-list">
+                    {addresses.map((address) => (
+                      <article
+                        className="account-address-card"
+                        key={address.id}
+                      >
+                        <div>
+                          <span className="account-label">
+                            SAVED ADDRESS
+                          </span>
+
+                          <h3>{address.name}</h3>
+
+                          <p>{address.address}</p>
+
+                          <p>
+                            {address.city},{" "}
+                            {address.state} —{" "}
+                            {address.pincode}
+                          </p>
+
+                          <p>{address.phone}</p>
+                        </div>
+
+                        <button
+                          type="button"
+                          aria-label={`Remove address for ${address.name}`}
+                          onClick={() =>
+                            removeAddress(
+                              address.id
+                            )
+                          }
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </article>
+                    ))}
+                  </div>
+                )}
+
+                <p className="account-panel-note">
+                  Addresses are saved locally in
+                  this browser for demonstration.
+                  They are not automatically applied
+                  during checkout.
+                </p>
+              </section>
+            )}
+          </div>
+        </div>
+
+        <button
+          className="account-logout"
+          type="button"
+          onClick={handleLogout}
+        >
+          <LogOut
+            size={17}
+            strokeWidth={1.5}
+          />
+          SIGN OUT
+        </button>
+      </div>
+    </main>
+  );
+}
+
+export function Account() {
+  const user = getStoredUser();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return (
+    <AccountDashboard
+      key={user.id}
+      user={user}
+    />
+  );
+}

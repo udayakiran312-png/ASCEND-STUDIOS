@@ -1,0 +1,402 @@
+
+/* ==========================================
+   ASCEND STUDIOS — COLLECTION PAGES
+   MEN / WOMEN / ACCESSORIES
+========================================== */
+
+.men-page {
+  min-height: 100vh;
+  background: #f5f3ef;
+  color: #202020;
+  padding: 38px 3% 45px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* COLLECTION HEADING */
+
+.men-heading {
+  padding: 8px 0 28px;
+}
+
+.men-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.7px;
+}
+
+.men-heading h1 {
+  font-size: clamp(56px, 8vw, 115px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.065em;
+  margin: 24px 0 22px;
+  overflow-wrap: normal;
+}
+
+.men-heading-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.men-heading-bottom p,
+.men-heading-bottom span {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  margin: 0;
+}
+
+/* CATEGORY FILTERS */
+
+.men-controls {
+  border-top: 1px solid #d8d5cf;
+  border-bottom: 1px solid #d8d5cf;
+  padding: 17px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+
+.men-categories {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.men-categories button {
+  border: 0;
+  background: transparent;
+  color: #77736e;
+  padding: 7px 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  font-family: inherit;
+}
+
+.men-categories button:hover,
+.men-categories button.active {
+  color: #202020;
+  border-bottom-color: #202020;
+}
+
+/* SORT */
+
+.men-sort {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.men-sort label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #77736e;
+}
+
+.men-sort select {
+  border: 0;
+  background: transparent;
+  color: #202020;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline-offset: 5px;
+}
+
+/* PRODUCT COUNT */
+
+.men-results {
+  padding: 20px 0 15px;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: #77736e;
+}
+
+/* PRODUCT GRID */
+
+.men-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 36px 15px;
+}
+
+.men-product {
+  min-width: 0;
+}
+
+/* PRODUCT IMAGES */
+
+.men-product-image {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background: #e8e5df;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.men-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.men-product:hover .men-product-image img {
+  transform: scale(1.035);
+}
+
+.men-product-image > span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #aaa59d;
+}
+
+/* PRODUCT INFORMATION */
+
+.men-product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-top: 15px;
+}
+
+.men-product-info h2 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 7px;
+  line-height: 1.4;
+}
+
+.men-product-info p {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #77736e;
+}
+
+.men-product-price {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* COLLECTION END */
+
+.men-end {
+  border-top: 1px solid #d8d5cf;
+  margin-top: 38px;
+  padding-top: 16px;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #77736e;
+}
+
+/* ==========================================
+   ACCESSORIES
+========================================== */
+
+/* Smaller heading for the longer word */
+
+.accessories-page .men-heading h1 {
+  font-size: clamp(44px, 7vw, 105px);
+  letter-spacing: -0.065em;
+  white-space: nowrap;
+}
+
+/* Square accessory images */
+
+.accessories-page .accessories-product-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #d3c7bf;
+}
+
+.accessories-page .accessories-product-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform: none !important;
+}
+
+.accessories-page
+.men-product:hover
+.accessories-product-image img {
+  transform: none !important;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 1000px) {
+  .men-page {
+    padding: 32px 4% 40px;
+  }
+
+  .men-heading h1 {
+    font-size: clamp(54px, 9vw, 90px);
+  }
+
+  .accessories-page .men-heading h1 {
+    font-size: clamp(40px, 7.5vw, 76px);
+  }
+
+  .men-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .men-controls {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .men-categories {
+    gap: 12px 24px;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 650px) {
+  .men-page {
+    padding: 26px 4% 35px;
+  }
+
+  .men-heading {
+    padding: 5px 0 20px;
+  }
+
+  .men-eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+  }
+
+  .men-heading h1 {
+    font-size: clamp(48px, 12vw, 76px);
+    letter-spacing: -0.06em;
+    margin: 20px 0 16px;
+  }
+
+  .accessories-page .men-heading h1 {
+    font-size: clamp(29px, 8.3vw, 54px);
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+  }
+
+  .men-heading-bottom {
+    align-items: flex-start;
+  }
+
+  .men-heading-bottom p {
+    font-size: 10px;
+    letter-spacing: 0.8px;
+  }
+
+  .men-heading-bottom span {
+    display: none;
+  }
+
+  .men-controls {
+    padding: 14px 0;
+    gap: 12px;
+  }
+
+  .men-categories {
+    gap: 8px 18px;
+  }
+
+  .men-categories button {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .men-sort label,
+  .men-sort select {
+    font-size: 10px;
+  }
+
+  .men-results {
+    padding: 16px 0 12px;
+  }
+
+  .men-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px 10px;
+  }
+
+  .men-product-info {
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 10px;
+  }
+
+  .men-product-info h2 {
+    font-size: 12px;
+  }
+
+  .men-product-info p {
+    font-size: 9px;
+  }
+
+  .men-product-price {
+    font-size: 11px;
+  }
+
+  .men-end {
+    margin-top: 30px;
+    padding-top: 14px;
+    font-size: 9px;
+  }
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 380px) {
+  .men-heading h1 {
+    font-size: 46px;
+  }
+
+  .accessories-page .men-heading h1 {
+    font-size: 8vw;
+  }
+
+  .men-categories {
+    gap: 8px 14px;
+  }
+
+  .men-product-grid {
+    gap: 22px 8px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .men-product-image img {
+    transition: none;
+  }
+}

@@ -1,0 +1,198 @@
+
+.ascend-search-page {
+  min-height: 85vh;
+  padding: 55px 4% 110px;
+  background: #f5f3ef;
+  color: #202020;
+}
+
+.ascend-search-heading {
+  margin-bottom: 45px;
+}
+
+.ascend-search-heading > span,
+.ascend-search-heading p {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #817b74;
+}
+
+.ascend-search-heading h1 {
+  margin: 25px 0 15px;
+  font-size: clamp(70px, 12vw, 160px);
+  line-height: 0.9;
+  font-weight: 800;
+  letter-spacing: -6px;
+}
+
+.ascend-search-form {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid #202020;
+  padding: 12px 0 22px;
+  margin-bottom: 48px;
+}
+
+.ascend-search-form input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #202020;
+  font: inherit;
+  font-size: clamp(15px, 2vw, 23px);
+  letter-spacing: 1px;
+}
+
+.ascend-search-form input::placeholder {
+  color: #aaa49c;
+}
+
+.ascend-search-form button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ascend-search-form .ascend-search-submit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: #202020;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.ascend-search-results-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding-bottom: 17px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #d8d5cf;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.ascend-search-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 35px 15px;
+}
+
+.ascend-search-product {
+  text-decoration: none;
+  color: inherit;
+}
+
+.ascend-search-image {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #e8e5e0;
+}
+
+.ascend-search-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.ascend-search-product:hover img {
+  transform: scale(1.035);
+}
+
+.ascend-search-product-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 15px;
+}
+
+.ascend-search-product-info h2 {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ascend-search-product-info p {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #817b74;
+  margin-top: 8px;
+}
+
+.ascend-search-product-info strong {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.ascend-search-empty {
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+}
+
+.ascend-search-empty h2 {
+  font-size: clamp(25px, 4vw, 42px);
+  letter-spacing: -1px;
+}
+
+.ascend-search-empty p {
+  font-size: 14px;
+  color: #817b74;
+}
+
+.ascend-search-empty a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+  padding: 17px 25px;
+  background: #202020;
+  color: white;
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 900px) {
+  .ascend-search-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .ascend-search-page {
+    padding: 35px 5% 70px;
+  }
+
+  .ascend-search-heading h1 {
+    letter-spacing: -3px;
+  }
+
+  .ascend-search-form {
+    gap: 10px;
+  }
+
+  .ascend-search-form .ascend-search-submit {
+    padding: 13px;
+    font-size: 0;
+    gap: 0;
+  }
+
+  .ascend-search-product-info {
+    flex-direction: column;
+  }
+}
