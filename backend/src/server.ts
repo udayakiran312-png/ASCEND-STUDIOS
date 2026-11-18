@@ -15,7 +15,11 @@ if (!JWT_SECRET) {
 }
 
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    process.env.FRONTEND_URL,
+  ].filter((origin): origin is string => Boolean(origin)),
 }));
 
 app.use(express.json());
@@ -146,6 +150,10 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`ASCEND STUDIOS API running at http://localhost:${PORT}`);
-});
+if (process.env.VERCEL !== "1") {
+  app.listen(PORT, () => {
+    console.log(`ASCEND STUDIOS API running at http://localhost:${PORT}`);
+  });
+}
+
+export default app;
