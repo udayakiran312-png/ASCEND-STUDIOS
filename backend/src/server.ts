@@ -18,6 +18,7 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "http://localhost:5174",
+    "https://ascend-studios-rho.vercel.app",
     process.env.FRONTEND_URL,
   ].filter((origin): origin is string => Boolean(origin)),
 }));
