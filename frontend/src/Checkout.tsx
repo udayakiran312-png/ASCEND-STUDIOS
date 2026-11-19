@@ -477,7 +477,7 @@ export default function Checkout() {
 
               <div>
                 <strong>
-                  CASH ON DELIVERY Ã¢â‚¬â€ DEMO
+                  CASH ON DELIVERY DEMO
                 </strong>
 
                 <p>
