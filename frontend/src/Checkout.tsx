@@ -48,7 +48,7 @@ type OrderResponse = {
   total?: number;
 };
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 const CART_KEY = "ascend_cart";
 const ORDER_KEY = "ascend_orders";
 const LAST_ORDER_KEY = "ascend_last_order";
@@ -477,7 +477,7 @@ export default function Checkout() {
 
               <div>
                 <strong>
-                  CASH ON DELIVERY — DEMO
+                  CASH ON DELIVERY Ã¢â‚¬â€ DEMO
                 </strong>
 
                 <p>
@@ -624,7 +624,7 @@ export function OrderSuccess() {
       </span>
 
       <div className="checkout-success-mark">
-        ✓
+        Ã¢Å“â€œ
       </div>
 
       <h1>

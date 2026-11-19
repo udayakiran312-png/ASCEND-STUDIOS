@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import "./Auth.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const TOKEN_KEY = "ascend_token";
 const USER_KEY = "ascend_user";
@@ -1190,7 +1190,7 @@ function AccountDashboard({
 
                           <p>
                             {address.city},{" "}
-                            {address.state} —{" "}
+                            {address.state} Ã¢â‚¬â€{" "}
                             {address.pincode}
                           </p>
 
