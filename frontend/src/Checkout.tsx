@@ -623,9 +623,7 @@ export function OrderSuccess() {
         ASCEND STUDIOS / ORDER CONFIRMATION
       </span>
 
-      <div className="checkout-success-mark">
-        Ã¢Å“â€œ
-      </div>
+     
 
       <h1>
         {order
