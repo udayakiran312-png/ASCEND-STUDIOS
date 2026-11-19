@@ -243,3 +243,31 @@
     transition: none;
   }
 }
+
+
+/* ==========================================
+   ASCEND STUDIOS — INFINITE SCROLL REVEAL
+   All routes, desktop + mobile; original layout unaffected.
+========================================== */
+
+.ascend-scroll-reveal {
+  opacity: 0;
+  translate: 0 22px;
+  transition:
+    opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    translate 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ascend-scroll-reveal.ascend-reveal-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ascend-scroll-reveal,
+  .ascend-scroll-reveal.ascend-reveal-visible {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}
