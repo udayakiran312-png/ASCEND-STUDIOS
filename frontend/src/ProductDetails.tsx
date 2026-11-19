@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Heart } from "lucide-react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import "./ProductDetails.css";
@@ -318,6 +318,28 @@ export default function ProductDetails() {
     return item.id < 101;
   });
 
+  // Keep recommendations in the same collection and exclude the current product.
+  // Items from the same product category come first, just like the earlier upgrade.
+  const relatedProducts = useMemo(() => {
+    if (!product) return [];
+
+    const inCollection = (item: Product) =>
+      collection === "accessories"
+        ? item.id >= 201
+        : collection === "women"
+          ? item.id >= 101 && item.id < 201
+          : item.id < 101;
+
+    return products
+      .filter((item) => item.id !== product.id && inCollection(item))
+      .sort(
+        (a, b) =>
+          Number(b.category === product.category) -
+          Number(a.category === product.category)
+      )
+      .slice(0, 4);
+  }, [product, collection]);
+
   const sizeOptions = product?.sizes ?? ["S", "M", "L", "XL"];
 
   const [size, setSize] = useState("");
@@ -627,6 +649,42 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
+
+      {/* The only new feature: related products beneath the original layout. */}
+      {relatedProducts.length > 0 && (
+        <section
+          className="product-related"
+          aria-labelledby="ascend-related-heading"
+        >
+          <div className="product-related-heading">
+            <span>CURATED FOR YOU</span>
+            <h2 id="ascend-related-heading">YOU MAY ALSO LIKE</h2>
+          </div>
+
+          <div className="product-related-grid">
+            {relatedProducts.map((item) => (
+              <Link
+                key={item.id}
+                className="product-related-card"
+                to={`/${collection}/${item.id}`}
+                onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
+                aria-label={`View ${item.name}`}
+              >
+                <div className="product-related-image">
+                  <img src={item.image} alt={item.name} loading="lazy" />
+                </div>
+                <div className="product-related-meta">
+                  <div>
+                    <span>{item.category}</span>
+                    <strong>{item.name}</strong>
+                  </div>
+                  <span>{formatPrice(item.price)}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

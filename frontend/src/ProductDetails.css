@@ -237,3 +237,114 @@
     letter-spacing: -1px;
   }
 }
+
+
+/* YOU MAY ALSO LIKE — the only new styles. The main product page is unchanged. */
+.product-related {
+  margin-top: clamp(65px, 9vw, 132px);
+}
+
+.product-related-heading > span {
+  color: #77736e;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  font-weight: 700;
+}
+
+.product-related-heading h2 {
+  font-size: clamp(25px, 3vw, 40px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin: 10px 0 30px;
+}
+
+.product-related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.product-related-card {
+  display: block;
+  text-decoration: none;
+  color: #202020;
+  min-width: 0;
+}
+
+.product-related-image {
+  background: #e9e7e3;
+  overflow: hidden;
+  aspect-ratio: 2 / 3;
+}
+
+.product-related-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 350ms ease;
+}
+
+.product-related-card:hover .product-related-image img {
+  transform: scale(1.035);
+}
+
+.product-related-card:focus-visible {
+  outline: 2px solid #202020;
+  outline-offset: 5px;
+}
+
+.product-related-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  font-size: 12px;
+}
+
+.product-related-meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.product-related-meta div > span {
+  color: #77736e;
+  font-size: 10px;
+  letter-spacing: .6px;
+}
+
+.product-related-meta strong {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.product-related-meta > span {
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .product-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-related-meta {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .product-related-heading h2 {
+    margin-bottom: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-related-image img {
+    transition: none;
+  }
+}
