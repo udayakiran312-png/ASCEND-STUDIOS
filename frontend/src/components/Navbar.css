@@ -481,7 +481,7 @@
 
   .header-actions a[href="/login"],
   .header-actions a[href="/wishlist"] {
-    display: none;
+    display: inline-flex;
   }
 
   .header-search {
