@@ -83,6 +83,34 @@ const products: Product[] = [
     price: 3999,
     image: "/images/products/men-minimal-zip-jacket-black.png",
   },
+  {
+    id: 9,
+    name: "Essential Grey Baggy Sweatpants",
+    category: "Trousers",
+    price: 1899,
+    image: "/images/products/men-grey-baggy-sweatpants.png",
+  },
+  {
+    id: 10,
+    name: "Relaxed Linen Shirt",
+    category: "Shirts",
+    price: 2399,
+    image: "/images/products/men-relaxed-linen-shirt.png",
+  },
+  {
+    id: 11,
+    name: "Charcoal Knit Polo",
+    category: "Shirts",
+    price: 2299,
+    image: "/images/products/men-charcoal-knit-polo.png",
+  },
+  {
+    id: 12,
+    name: "Midnight Quarter-Zip Knit",
+    category: "Shirts",
+    price: 2699,
+    image: "/images/products/men-midnight-quarter-zip.png",
+  },
 ];
 
 const formatPrice = (price: number) =>

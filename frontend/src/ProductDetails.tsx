@@ -108,6 +108,43 @@ const products: Product[] = [
       "Clean lines and understated detailing define this zip jacket.",
   },
 
+  {
+    id: 9,
+    name: "Essential Grey Baggy Sweatpants",
+    category: "TROUSERS",
+    price: 1899,
+    image: "/images/products/men-grey-baggy-sweatpants.png",
+    description:
+      "Relaxed grey sweatpants with a generous baggy fit and soft everyday comfort.",
+  },
+  {
+    id: 10,
+    name: "Relaxed Linen Shirt",
+    category: "SHIRTS",
+    price: 2399,
+    image: "/images/products/men-relaxed-linen-shirt.png",
+    description:
+      "A breathable linen shirt with a relaxed silhouette, effortless drape, and refined everyday appeal.",
+  },
+  {
+    id: 11,
+    name: "Charcoal Knit Polo",
+    category: "SHIRTS",
+    price: 2299,
+    image: "/images/products/men-charcoal-knit-polo.png",
+    description:
+      "A refined charcoal knit polo with a textured finish, relaxed tailoring, and understated luxury.",
+  },
+  {
+    id: 12,
+    name: "Midnight Quarter-Zip Knit",
+    category: "SHIRTS",
+    price: 2699,
+    image: "/images/products/men-midnight-quarter-zip.png",
+    description:
+      "An oversized charcoal quarter-zip knit with a structured collar, textured finish, and contemporary streetwear silhouette.",
+  },
+
   // WOMEN
   {
     id: 101,
@@ -180,6 +217,44 @@ const products: Product[] = [
     image: "/images/products/women-minimal-cropped-jacket.png",
     description:
       "A contemporary cropped jacket with clean, minimal detailing.",
+  },
+
+
+  {
+    id: 109,
+    name: "Sculpted Ribbed Knit Top",
+    category: "TOPS",
+    price: 2299,
+    image: "/images/products/women-sculpted-ribbed-knit-top.png",
+    description:
+      "A fitted charcoal ribbed knit top with an elegant silhouette, soft texture, and refined minimalist styling.",
+  },
+  {
+    id: 110,
+    name: "Draped Satin Shirt",
+    category: "SHIRTS",
+    price: 2399,
+    image: "/images/products/women-draped-satin-shirt.png",
+    description:
+      "An elegant ivory satin shirt with a fluid drape, relaxed fit, and refined contemporary styling.",
+  },
+  {
+    id: 111,
+    name: "Relaxed Cargo Trouser",
+    category: "TROUSERS",
+    price: 2699,
+    image: "/images/products/women-relaxed-cargo-trouser.png",
+    description:
+      "Oversized stone-grey cargo trousers with a relaxed silhouette, utility pockets, and contemporary streetwear styling.",
+  },
+  {
+    id: 112,
+    name: "Longline Trench Coat",
+    category: "OUTERWEAR",
+    price: 4799,
+    image: "/images/products/women-longline-trench-coat.png",
+    description:
+      "A sophisticated taupe trench coat featuring a relaxed longline silhouette, double-breasted design, and adjustable waist belt.",
   },
 
   // ACCESSORIES
@@ -261,6 +336,46 @@ const products: Product[] = [
     image: "/images/products/accessory-necklace.png",
     description:
       "A timeless silver-tone necklace designed for understated everyday expression.",
+    sizes: ["ONE SIZE"],
+  },
+  {
+    id: 209,
+    name: "Minimal Steel Watch",
+    category: "WATCHES",
+    price: 3999,
+    image: "/images/products/accessory-minimal-steel-watch.png",
+    description:
+      "A refined stainless-steel watch featuring a matte-black dial, minimalist silver markers, and a brushed metal bracelet.",
+    sizes: ["ONE SIZE"],
+  },
+  {
+    id: 210,
+    name: "Silk Paisley Bandana",
+    category: "SCARVES",
+    price: 1499,
+    image: "/images/products/accessory-silk-paisley-bandana.png",
+    description:
+      "A premium black silk bandana featuring intricate ivory paisley patterns, a smooth finish, and versatile styling.",
+    sizes: ["ONE SIZE"],
+  },
+  {
+    id: 211,
+    name: "Sculpted Silver Ring",
+    category: "JEWELLERY",
+    price: 1899,
+    image: "/images/products/accessory-sculpted-silver-ring.png",
+    description:
+      "A polished silver-tone ring with a fluid sculptural silhouette, designed for understated contemporary elegance.",
+    sizes: ["ONE SIZE"],
+  },
+  {
+    id: 212,
+    name: "Minimal Leather Cardholder",
+    category: "LEATHER GOODS",
+    price: 1299,
+    image: "/images/products/accessory-minimal-leather-cardholder.png",
+    description:
+      "A slim black leather cardholder featuring refined stitching, multiple card slots, and a minimalist design.",
     sizes: ["ONE SIZE"],
   },
 ];

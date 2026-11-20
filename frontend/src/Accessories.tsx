@@ -11,7 +11,9 @@ type Category =
   | "Leather Goods"
   | "Eyewear"
   | "Headwear"
-  | "Jewellery";
+  | "Jewellery"
+  | "Watches"
+  | "Scarves";
 
 type Product = {
   id: number;
@@ -87,6 +89,38 @@ const products: Product[] = [
     price: 1199,
     image: "/images/products/accessory-necklace.png",
   },
+  {
+    id: 209,
+    name: "Minimal Steel Watch",
+    gender: "Unisex",
+    category: "Watches",
+    price: 3999,
+    image: "/images/products/accessory-minimal-steel-watch.png",
+  },
+  {
+    id: 210,
+    name: "Silk Paisley Bandana",
+    gender: "Unisex",
+    category: "Scarves",
+    price: 1499,
+    image: "/images/products/accessory-silk-paisley-bandana.png",
+  },
+  {
+    id: 211,
+    name: "Sculpted Silver Ring",
+    gender: "Unisex",
+    category: "Jewellery",
+    price: 1899,
+    image: "/images/products/accessory-sculpted-silver-ring.png",
+  },
+  {
+    id: 212,
+    name: "Minimal Leather Cardholder",
+    gender: "Unisex",
+    category: "Leather Goods",
+    price: 1299,
+    image: "/images/products/accessory-minimal-leather-cardholder.png",
+  },
 ];
 
 const genders: Gender[] = ["All", "Men", "Women"];
@@ -98,6 +132,8 @@ const categories: Category[] = [
   "Eyewear",
   "Headwear",
   "Jewellery",
+  "Watches",
+  "Scarves",
 ];
 
 const formatPrice = (price: number) =>

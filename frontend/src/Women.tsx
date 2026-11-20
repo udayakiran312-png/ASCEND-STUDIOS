@@ -85,6 +85,35 @@ const products: Product[] = [
     price: 3999,
     image: "/images/products/women-minimal-cropped-jacket.png",
   },
+
+  {
+    id: 109,
+    name: "Sculpted Ribbed Knit Top",
+    category: "Tops",
+    price: 2299,
+    image: "/images/products/women-sculpted-ribbed-knit-top.png",
+  },
+  {
+    id: 110,
+    name: "Draped Satin Shirt",
+    category: "Shirts",
+    price: 2399,
+    image: "/images/products/women-draped-satin-shirt.png",
+  },
+  {
+    id: 111,
+    name: "Relaxed Cargo Trouser",
+    category: "Trousers",
+    price: 2699,
+    image: "/images/products/women-relaxed-cargo-trouser.png",
+  },
+  {
+    id: 112,
+    name: "Longline Trench Coat",
+    category: "Outerwear",
+    price: 4799,
+    image: "/images/products/women-longline-trench-coat.png",
+  },
 ];
 
 export default function Women() {
